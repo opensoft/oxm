@@ -22,12 +22,11 @@ namespace Doctrine\OXM;
 use Doctrine\OXM\Marshaller\Marshaller;
 use Doctrine\OXM\Storage\Storage;
 use Doctrine\Common\EventManager;
-use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  *
  */
-class XmlEntityManager implements ObjectManager
+class XmlEntityManager
 {
     /**
      * The used Configuration.

@@ -21,7 +21,6 @@ namespace Doctrine\OXM\Mapping;
 
 use ReflectionClass;
 use ReflectionProperty;
-use Doctrine\Common\Persistence\Mapping\ClassMetadata as BaseClassMetadata;
 use Doctrine\OXM\Util\Inflector;
 use Doctrine\OXM\Types\Type;
 
@@ -33,7 +32,7 @@ use Doctrine\OXM\Types\Type;
  * @version $Revision$
  * @author  Richard Fullmer <richard.fullmer@opensoftdev.com>
  */
-class ClassMetadataInfo implements BaseClassMetadata
+class ClassMetadataInfo
 {
     /* XML Type Constants */
     const XML_ELEMENT   = 'element';

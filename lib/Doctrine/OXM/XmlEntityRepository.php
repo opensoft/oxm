@@ -19,9 +19,8 @@
 
 namespace Doctrine\OXM;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 
-class XmlEntityRepository implements ObjectRepository
+class XmlEntityRepository
 {
     /**
      * @var string

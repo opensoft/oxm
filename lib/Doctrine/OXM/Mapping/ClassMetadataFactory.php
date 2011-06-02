@@ -26,7 +26,6 @@ use Doctrine\Common\Util\Debug;
 use Doctrine\OXM\Events;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\EventManager;
-use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory as BaseClassMetadataFactory;
 use Doctrine\OXM\Types\Type;
 
 /**
@@ -40,7 +39,7 @@ use Doctrine\OXM\Types\Type;
  * @version $Revision$
  * @author  Richard Fullmer <richard.fullmer@opensoftdev.com>
  */
-class ClassMetadataFactory implements BaseClassMetadataFactory
+class ClassMetadataFactory
 {
     /**
      * @var \Doctrine\OXM\Configuration
