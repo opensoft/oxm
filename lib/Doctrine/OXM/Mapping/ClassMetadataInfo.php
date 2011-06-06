@@ -546,7 +546,7 @@ class ClassMetadataInfo
         }
 
         if (!isset($mapping['direct'])) {
-            $mapping['direct'] = true;
+            $mapping['direct'] = false;
         }
 
         if (!isset($mapping['nillable'])) {

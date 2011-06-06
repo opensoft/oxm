@@ -44,7 +44,7 @@ class XmlField extends Annotation {
     public $type;       // required
     public $name;       // implied (xml element name)
     public $node;       // implied (attribute, text, element)
-    public $direct = true;
+    public $direct = false;
     public $nillable = false;
     public $required = false;
     public $collection = false;

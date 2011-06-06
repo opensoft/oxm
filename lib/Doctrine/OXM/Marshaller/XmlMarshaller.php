@@ -72,6 +72,8 @@ class XmlMarshaller implements Marshaller
      */
     private $schemaVersion = '1.0';
 
+    const DOCTRINE_PROXY_INTERFACE = 'Doctrine\ORM\Proxy\Proxy';
+
     /**
      * @param ClassMetadataFactory
      */
@@ -372,6 +374,23 @@ class XmlMarshaller implements Marshaller
     }
 
     /**
+     * @param object $mappedObject
+     * @return string|false
+     */
+    private function getClassNameForMetadata($mappedObject)
+    {
+        if (in_array(self::DOCTRINE_PROXY_INTERFACE, class_implements($mappedObject))) {
+            $parentClasses = class_parents($mappedObject);
+            if ($parentClasses !== false) {
+                return current($parentClasses);
+            }
+            return false;
+        } else {
+            return get_class($mappedObject);
+        }
+    }
+
+    /**
      * INTERNAL: Performance sensitive method
      *
      * @throws MarshallerException
@@ -381,7 +400,7 @@ class XmlMarshaller implements Marshaller
      */
     private function doMarshal($mappedObject, WriterHelper $writer)
     {
-        $className = get_class($mappedObject);
+        $className = $this->getClassNameForMetadata($mappedObject);
         $classMetadata = $this->classMetadataFactory->getMetadataFor($className);
 
         if (!$this->classMetadataFactory->hasMetadataFor($className)) {
