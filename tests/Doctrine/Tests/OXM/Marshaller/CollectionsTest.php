@@ -44,7 +44,7 @@ class CollectionsTest extends OxmTestCase
 
         $xml = $this->marshaller->marshalToString($request);
 
-        $this->assertXmlStringEqualsXmlString('<collection-class>
+        $this->assertXmlStringEqualsXmlString('<collection-class repositoryBy="0">
             <list>one</list>
             <list>two</list>
             <list>three</list>
@@ -68,7 +68,7 @@ class CollectionsTest extends OxmTestCase
 
         $xml = $this->marshaller->marshalToString($colorContainer);
 
-        $this->assertXmlStringEqualsXmlString('<collection-attribute-class colors="red green blue" />', $xml);
+        $this->assertXmlStringEqualsXmlString('<collection-attribute-class repositoryBy="0" colors="red green blue" />', $xml);
 
         $otherContainer = $this->marshaller->unmarshalFromString($xml);
 
@@ -89,7 +89,7 @@ class CollectionsTest extends OxmTestCase
 
         $xml = $this->marshaller->marshalToString($wrapper);
 
-        $this->assertXmlStringEqualsXmlString('<wrapper xmlns:prfx="http://www.foo.bar.baz.com/schema">
+        $this->assertXmlStringEqualsXmlString('<wrapper xmlns:prfx="http://www.foo.bar.baz.com/schema" repositoryBy="0">
             <foo>
                 <list>red</list>
                 <list>green</list>

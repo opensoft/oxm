@@ -28,11 +28,11 @@ namespace Doctrine\Tests\OXM\Entities\NamespaceEntities;
  */
 class Foo
 {
-    /** @XmlText(type="string") */
+    /** @XmlText(type="string", direct=true) */
     public $id;
 
     /**
-     * @XmlText(type="string", prefix="baz")
+     * @XmlText(type="string", prefix="baz", direct=true)
      */
     public $bo;
 }

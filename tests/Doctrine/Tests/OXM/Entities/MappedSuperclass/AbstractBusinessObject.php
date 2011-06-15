@@ -24,10 +24,10 @@ namespace Doctrine\Tests\OXM\Entities\MappedSuperclass;
  */
 abstract class AbstractBusinessObject
 {
-    /** @XmlAttribute(type="string") */
+    /** @XmlAttribute(type="string", direct="true") */
     public $inherit;
 
-    /** @XmlText(type="string") */
+    /** @XmlText(type="string", direct="true") */
     public $overridden;
 
 }

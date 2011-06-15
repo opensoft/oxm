@@ -65,6 +65,20 @@ class User
      */
     private $contacts;
 
+
+    /**
+     * @var Article[]
+     *
+     *
+     * @XmlElement(type="Doctrine\Tests\OXM\Entities\Article", collection=true, name="article", nillable=true)
+     */
+    private $articles;
+
+    public function __construct()
+    {
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * @return void
      * @PreMarshal
@@ -129,6 +143,21 @@ class User
     public function getContacts()
     {
         return $this->contacts;
+    }
+
+    public function addArticle(Article $contact)
+    {
+        $this->articles[] = $contact;
+    }
+
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    public function setArticles($articles)
+    {
+        $this->articles = $articles;
     }
 
 }

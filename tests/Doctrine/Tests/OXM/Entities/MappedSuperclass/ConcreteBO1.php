@@ -25,10 +25,10 @@ namespace Doctrine\Tests\OXM\Entities\MappedSuperclass;
 class ConcreteBO1 extends AbstractBusinessObject
 {
     /**
-     * @XmlAttribute(type="string")
+     * @XmlAttribute(type="string", direct="true")
      */
     public $type;
 
-    /** @XmlText(type="string", required="true") */
+    /** @XmlText(type="string", required="true", direct="true") */
     public $overridden;
 }

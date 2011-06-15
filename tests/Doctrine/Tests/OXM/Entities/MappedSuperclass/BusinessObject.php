@@ -25,7 +25,7 @@ namespace Doctrine\Tests\OXM\Entities\MappedSuperclass;
 class BusinessObject extends AbstractBusinessObject
 {
     /**
-     * @XmlAttribute(type="string")
+     * @XmlAttribute(type="string", direct="true")
      */
     public $description;
 }

@@ -183,7 +183,6 @@ class ClassMetadataFactory
     public function getMetadataFor($className)
     {
         if ( ! isset($this->loadedMetadata[$className])) {
-//            print_r('loading class ' . $className . "\n");
             $realClassName = $className;
 
             // Check for namespace alias
@@ -319,8 +318,6 @@ class ClassMetadataFactory
             if ( ! $class->isMappedSuperclass && in_array($class->getXmlName(), array_keys($this->xmlToClassMap))) {
                 throw MappingException::duplicateXmlNameBinding($className, $class->getXmlName());
             }
-            
-            $this->completeMappingTypeValidation($className, $class);
 
             if ($parent && ! $parent->isMappedSuperclass) {
                 if ($parent->generatorType) {
@@ -335,6 +332,8 @@ class ClassMetadataFactory
 
             $class->setParentClasses($visited);
 
+
+
             // Todo - ensure that root elements have an ID mapped
 
             if ($this->evm->hasListeners(Events::loadClassMetadata)) {
@@ -342,7 +341,12 @@ class ClassMetadataFactory
                 $this->evm->dispatchEvent(Events::loadClassMetadata, $eventArgs);
             }
 
+            /**
+             * Firstly, we must save parsing object in the repository, then proceed to parsing of dependent objects.
+             * This guarantees the absence of infinite loops.
+             */
             $this->loadedMetadata[$className] = $class;
+            $this->completeMappingTypeValidation($className, $class);
 
             if ( ! $class->isMappedSuperclass) {
                 $this->xmlToClassMap[$class->getXmlName()] = $className;
@@ -377,7 +381,6 @@ class ClassMetadataFactory
             if (!$this->hasMetadataFor($mapping['type']) && !$this->getMetadataFor($mapping['type'])) {
                 throw MappingException::fieldTypeNotFound($className, $fieldName, $mapping['type']);
             }
-
             // Mapped classes must have binding node type XML_ELEMENT
             if ($mapping['node'] !== ClassMetadataInfo::XML_ELEMENT) {
                 throw MappingException::customTypeWithoutNodeElement($className, $fieldName);

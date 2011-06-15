@@ -24,11 +24,11 @@ namespace Doctrine\Tests\OXM\Entities\MappedSuperclass;
  */
 class Request
 {
-    /** @XmlAttribute(type="string") */
+    /** @XmlAttribute(type="string", direct=true) */
     public $id;
 
     /**
-     * @XmlElement(type="Doctrine\Tests\OXM\Entities\MappedSuperclass\AbstractBusinessObject")
+     * @XmlElement(type="Doctrine\Tests\OXM\Entities\MappedSuperclass\AbstractBusinessObject", direct=true)
      */
     public $bo;
 }

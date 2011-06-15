@@ -25,7 +25,7 @@ namespace Doctrine\Tests\OXM\Entities\MappedSuperclass;
 class ConcreteBO3 extends BusinessObject
 {
     /**
-     * @XmlAttribute(type="string", required=true)
+     * @XmlAttribute(type="string", required=true, direct="true")
      */
     public $description;
 }
