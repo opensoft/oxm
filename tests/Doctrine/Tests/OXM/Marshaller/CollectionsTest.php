@@ -52,10 +52,55 @@ class CollectionsTest extends OxmTestCase
 
         $otherRequest = $this->marshaller->unmarshalFromString($xml);
 
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $otherRequest->list);
         $this->assertEquals(3, count($otherRequest->list));
+        $this->assertEquals(3, $otherRequest->list->count());
         $this->assertContains('one', $otherRequest->list);
         $this->assertContains('two', $otherRequest->list);
         $this->assertContains('three', $otherRequest->list);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldHandleXmlTextEmptyCollectionsProperly()
+    {
+        $request = new CollectionClass();
+        $request->list = array();
+
+        $xml = $this->marshaller->marshalToString($request);
+
+        $this->assertXmlStringEqualsXmlString('<collection-class repositoryBy="0">
+            <list/>
+        </collection-class>', $xml);
+
+        $otherRequest = $this->marshaller->unmarshalFromString($xml);
+
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $otherRequest->list);
+        $this->assertEquals(0, count($otherRequest->list));
+        $this->assertEquals(0, $otherRequest->list->count());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldHandleXmlTextCollectionsWithEmptyElementProperly()
+    {
+        $request = new CollectionClass();
+        $request->list = array('');
+
+        $xml = $this->marshaller->marshalToString($request);
+
+        $this->assertXmlStringEqualsXmlString('<collection-class repositoryBy="0">
+            <list></list>
+        </collection-class>', $xml);
+
+        $otherRequest = $this->marshaller->unmarshalFromString($xml);
+
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $otherRequest->list);
+        $this->assertEquals(1, count($otherRequest->list));
+        $this->assertEquals(1, $otherRequest->list->count());
+        $this->assertContains('', $otherRequest->list);
     }
 
     /**
@@ -68,14 +113,55 @@ class CollectionsTest extends OxmTestCase
 
         $xml = $this->marshaller->marshalToString($colorContainer);
 
-        $this->assertXmlStringEqualsXmlString('<collection-attribute-class repositoryBy="0" colors="red green blue" />', $xml);
+        $this->assertXmlStringEqualsXmlString('<collection-attribute-class repositoryBy="0" colors="0:red 1:green 2:blue" />', $xml);
 
         $otherContainer = $this->marshaller->unmarshalFromString($xml);
 
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $otherContainer->colors);
         $this->assertEquals(3, count($otherContainer->colors));
+        $this->assertEquals(3, $otherContainer->colors->count());
         $this->assertContains('red', $otherContainer->colors);
         $this->assertContains('green', $otherContainer->colors);
         $this->assertContains('blue', $otherContainer->colors);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldHandleXmlAttributeEmptyCollectionsProperly()
+    {
+        $colorContainer = new CollectionAttributeClass();
+        $colorContainer->colors = array();
+
+        $xml = $this->marshaller->marshalToString($colorContainer);
+
+        $this->assertXmlStringEqualsXmlString('<collection-attribute-class repositoryBy="0" colors="" />', $xml);
+
+        $otherContainer = $this->marshaller->unmarshalFromString($xml);
+
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $otherContainer->colors);
+        $this->assertEquals(0, count($otherContainer->colors));
+        $this->assertEquals(0, $otherContainer->colors->count());
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldHandleXmlAttributeCollectionsWithEmptyElementProperly()
+    {
+        $colorContainer = new CollectionAttributeClass();
+        $colorContainer->colors = array('');
+
+        $xml = $this->marshaller->marshalToString($colorContainer);
+
+        $this->assertXmlStringEqualsXmlString('<collection-attribute-class repositoryBy="0" colors="0:" />', $xml);
+
+        $otherContainer = $this->marshaller->unmarshalFromString($xml);
+
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $otherContainer->colors);
+        $this->assertEquals(1, count($otherContainer->colors));
+        $this->assertEquals(1, $otherContainer->colors->count());
+        $this->assertContains('', $otherContainer->colors);
     }
 
     /**

@@ -23,7 +23,7 @@ namespace Doctrine\Tests\OXM\Entities;
  *
  * 
  *
- * @XmlRootEntity(xml="User")
+ * @XmlRootEntity
  * @HasLifecycleCallbacks
  */
 class User
@@ -46,9 +46,15 @@ class User
     /**
      * @var string
      *
-     * @XmlAttribute(type="string", name="LastName")
+     * @XmlAttribute(type="string", name="LastName", nillable=true)
      */
-    private $lastName;
+    private $lastName=null;
+    /**
+     * @var string
+     *
+     * @XmlText(type="string",  nillable=true)
+     */
+    private $signature;
 
     /**
      * @var Address
@@ -61,7 +67,7 @@ class User
     /**
      * @var CustomerContact[]
      *
-     * @XmlElement(type="Doctrine\Tests\OXM\Entities\CustomerContact", collection=true, direct=true, name="customer-contact")
+     * @XmlElement(type="Doctrine\Tests\OXM\Entities\CustomerContact", collection=true, direct=true, name="customer-contact", nillable=true)
      */
     private $contacts;
 
@@ -158,6 +164,24 @@ class User
     public function setArticles($articles)
     {
         $this->articles = $articles;
+    }
+
+    /**
+     * @param string $signature
+     * @return Signature
+     */
+    public function setSignature($signature)
+    {
+        $this->signature = $signature;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSignature()
+    {
+        return $this->signature;
     }
 
 }

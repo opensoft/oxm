@@ -23,7 +23,7 @@ namespace Doctrine\Tests\OXM\Entities;
  *
  * 
  *
- * @XmlRootEntity(xml="Article")
+ * @XmlRootEntity
  */
 class Article
 {

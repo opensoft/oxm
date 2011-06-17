@@ -89,6 +89,17 @@ class MarshallerTest extends \PHPUnit_Framework_TestCase
         $article2->setAuthor($user)
                 ->setContent('Article2 text');
 
+
+
+        $userWithoutArticles = new User();
+        $userWithoutArticles->setFirstNameNickname('Malcolm');
+        $userWithoutArticles->setAddress(new Address('123 Waverly Way', 'New Haven', 'Insanity'));
+        $userWithoutArticles->addContact(new CustomerContact('no@way.com'));
+        $userWithoutArticles->addContact(new CustomerContact('other@way.com'));
+        $userWithoutArticles->setSignature('');
+
+
+
         $xml = $this->marshaller->marshalToString($user);
         $dom = new \DOMDocument('1.0');
         $dom->preserveWhiteSpace = false;
@@ -100,12 +111,19 @@ class MarshallerTest extends \PHPUnit_Framework_TestCase
         $otherArticle = $articles[0];
 
 
+        $xmlWithoutArticles = $this->marshaller->marshalToString($userWithoutArticles);
+        $dom->loadXML($xmlWithoutArticles);
+
+        $otherUserWithoutArticles = $this->marshaller->unmarshalFromString($xmlWithoutArticles);
+        $articlesUserWithoutArticles = $otherUserWithoutArticles->getArticles();
+
 //        print_r($otherUser);
 
         $this->assertInstanceOf('Doctrine\Tests\OXM\Entities\User', $otherUser);
 
         $this->assertEquals('Malcolm', $otherUser->getFirstNameNickname());
         $this->assertEquals('Reynolds', $otherUser->getLastName());
+        $this->assertNull($otherUser->getSignature());
 
         $this->assertEquals('123 Waverly Way', $otherUser->getAddress()->getStreet());
         $this->assertEquals('New Haven', $otherUser->getAddress()->getCity());
@@ -120,6 +138,18 @@ class MarshallerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Doctrine\Tests\OXM\Entities\User', $otherArticle->getAuthor());
         $this->assertEquals($otherArticle->getAuthor(), $otherUser);
         $this->assertEquals('Article text', $otherArticle->getContent());
+
+
+        $this->assertInstanceOf('Doctrine\Tests\OXM\Entities\User', $otherUserWithoutArticles);
+        $this->assertEquals('Malcolm', $otherUserWithoutArticles->getFirstNameNickname());
+        $this->assertNull($otherUserWithoutArticles->getLastName());
+        $this->assertEquals('', $otherUserWithoutArticles->getSignature());
+        $this->assertEquals('123 Waverly Way', $otherUserWithoutArticles->getAddress()->getStreet());
+        $this->assertEquals('New Haven', $otherUserWithoutArticles->getAddress()->getCity());
+        $this->assertEquals('Insanity', $otherUserWithoutArticles->getAddress()->getState());
+        $this->assertEquals(2, count($otherUserWithoutArticles->getContacts()));
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $articlesUserWithoutArticles);
+        $this->assertEquals(0, $articlesUserWithoutArticles->count());
     }
 
     public function testItShouldAutocompleteFields()

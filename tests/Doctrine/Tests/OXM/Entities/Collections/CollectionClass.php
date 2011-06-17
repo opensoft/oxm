@@ -22,13 +22,13 @@ namespace Doctrine\Tests\OXM\Entities\Collections;
 /** @XmlEntity */
 class CollectionClass
 {
-    /** @var array @XmlText(type="string", collection=true, direct=true) */
+    /** @var array @XmlText(type="string", collection=true, direct=true, nillable=true) */
     public $list;
 }
 
 /** @XmlEntity */
 class CollectionAttributeClass
 {
-    /** @var array @XmlAttribute(type="string", collection=true, direct=true) */
+    /** @var array @XmlAttribute(type="string", collection=true, direct=true, nillable=true) */
     public $colors;
 }
