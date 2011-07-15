@@ -17,18 +17,7 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Doctrine\Tests\OXM\Entities\Collections;
-
-/**
- * @XmlEntity
- * @XmlNamespace(url="http://www.foo.bar.baz.com/schema", prefix="prfx")
- */
-class Wrapper
-{
-    /** @var array @XmlText(type="string", collection=true, wrapper="foo", direct=true) */
-    public $list;
-
-
-    /** @var array @XmlText(type="string", collection=true, wrapper="bar", prefix="prfx", direct=true) */
-    public $enum;
-}
+namespace Doctrine\Tests\OXM\Entities\Simple;
+    
+/** @XmlEntity */
+class SimpleCompound { }

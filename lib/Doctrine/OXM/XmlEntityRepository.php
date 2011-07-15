@@ -76,7 +76,7 @@ class XmlEntityRepository
      * @param array $criteria
      * @return mixed The objects.
      */
-    public function findBy(array $criteria)
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
         throw new \Exception("XmlEntityRepository::findBy() is not yet implemented");
     }

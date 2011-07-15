@@ -17,18 +17,7 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Doctrine\Tests\OXM\Entities\Collections;
+namespace Doctrine\Tests\OXM\Entities\Simple;
 
-/**
- * @XmlEntity
- * @XmlNamespace(url="http://www.foo.bar.baz.com/schema", prefix="prfx")
- */
-class Wrapper
-{
-    /** @var array @XmlText(type="string", collection=true, wrapper="foo", direct=true) */
-    public $list;
-
-
-    /** @var array @XmlText(type="string", collection=true, wrapper="bar", prefix="prfx", direct=true) */
-    public $enum;
-}
+/** @XmlMappedSuperclass */
+abstract class SimpleAbstractParent { /** @XmlText(type="string", direct=true) */public $other = "yes"; }
