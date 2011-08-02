@@ -544,6 +544,7 @@ class XmlMarshaller implements Marshaller
                 }
 
                 if ($fieldValue !== null || $classMetadata->isNillable($fieldName)) {
+                    $this->classMetadataFactory->getMetadataFor($classMetadata->getTypeOfField($fieldName));
                     $this->_writeElement($writer, $classMetadata, $fieldName,  $fieldValue);
                 }
             }
