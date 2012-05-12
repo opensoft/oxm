@@ -89,6 +89,10 @@ class MarshallerTest extends \PHPUnit_Framework_TestCase
         $article2->setAuthor($user)
                 ->setContent('Article2 text');
 
+        $article3 = new Article();
+        $article3->setAuthor($user)
+            ->setContent(' ');
+
 
 
         $userWithoutArticles = new User();
@@ -109,6 +113,7 @@ class MarshallerTest extends \PHPUnit_Framework_TestCase
         $otherUser = $this->marshaller->unmarshalFromString($xml);
         $articles = $otherUser->getArticles();
         $otherArticle = $articles[0];
+        $articleWithWhitespace = $articles[2];
 
 
         $xmlWithoutArticles = $this->marshaller->marshalToString($userWithoutArticles);
@@ -133,7 +138,7 @@ class MarshallerTest extends \PHPUnit_Framework_TestCase
 
 
         $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $articles);
-        $this->assertEquals(2, $articles->count());
+        $this->assertEquals(3, $articles->count());
         $this->assertInstanceOf('Doctrine\Tests\OXM\Entities\Article', $otherArticle);
         $this->assertInstanceOf('Doctrine\Tests\OXM\Entities\User', $otherArticle->getAuthor());
         $this->assertEquals($otherArticle->getAuthor(), $otherUser);
@@ -150,6 +155,8 @@ class MarshallerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($otherUserWithoutArticles->getContacts()));
         $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $articlesUserWithoutArticles);
         $this->assertEquals(0, $articlesUserWithoutArticles->count());
+
+        $this->assertEquals(' ', $articleWithWhitespace->getContent());
     }
 
     public function testItShouldAutocompleteFields()
