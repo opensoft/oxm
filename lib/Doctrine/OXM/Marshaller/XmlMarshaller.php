@@ -603,14 +603,24 @@ class XmlMarshaller implements Marshaller
                     $writer->startElement($mapping['wrapper'], $prefix);
                 }
                 foreach ($fieldValue as $value) {
-                    $writer->writeElement($xmlName, Type::getType($type)->convertToXmlValue($value), $prefix);
+                    $value = Type::getType($type)->convertToXmlValue($value);
+                    if ($type == TYPE::STRING && $value !== null) {
+                        $writer->writeCdataElement($xmlName, $value, $prefix);
+                    } else {
+                        $writer->writeElement($xmlName, $value, $prefix);
+                    }
                 }
                 if ($classMetadata->hasFieldWrapping($fieldName)) {
                     $writer->endElement();
                 }
             }
         } else {
-            $writer->writeElement($xmlName, Type::getType($type)->convertToXmlValue($fieldValue), $prefix);
+            $fieldValue = Type::getType($type)->convertToXmlValue($fieldValue);
+            if ($type == TYPE::STRING && $fieldValue !== null) {
+                $writer->writeCdataElement($xmlName, $fieldValue, $prefix);
+            } else {
+                $writer->writeElement($xmlName, $fieldValue, $prefix);
+            }
         }
     }
 
